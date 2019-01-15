@@ -14,4 +14,4 @@ Win 7|Mark|todo
 Win 10|Rahul|todo
 Win 10|Brant|todo
 MS Server 2008 R2|Cole|todo
-Fedora Server 29|Pat|todo
+Fedora Server 29|Pat|[Notes](Fedora/Fedora_Server_29.md)
