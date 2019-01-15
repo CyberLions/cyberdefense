@@ -9,7 +9,7 @@ Installing the Fedora 29 Server image in VMware, I noticed that there's a web in
 ### Package Manager Tips
 yum or dnf (next gen replacement for yum)
 
-<details><summary>YUM</summary>
+<details><summary>man yum</summary>
 <p>
 
 ```bash
@@ -67,7 +67,7 @@ must be present.
 </p>
 </details>
 
-<details><summary>DNF</summary>
+<details><summary>man dnf</summary>
 <p>
 
 ```bash
@@ -317,3 +317,10 @@ cron.*                                                  /var/log/cron
 
 ---
 
+## FirewallD
+
+`/etc/firewalld/firewalld.conf`
+
+`DefaultZone=drop`
+
+verify firewalld enabled: `$ sudo systemctl enable firewalld.service`
