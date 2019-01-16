@@ -59,7 +59,7 @@ Software\Microsoft\Windows NT\CurrentVersion
 ##### HKEY\_LOCAL\_MACHINE
 ```
 Path: System -> CurrentControlSet -> Control -> Session Manager -> kernel  
-Value Name: DisableExceptionChainValidation** -> 0
+Value Name: DisableExceptionChainValidation -> 0
 ```
 
 ---
