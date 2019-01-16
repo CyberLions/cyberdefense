@@ -1,7 +1,5 @@
 # Windows 8.1
 
----
-
 ## Group Policy
 
 ### Computer Configuration -> (Policies) -> Windows Settings -> Security Settings -> Local Policies
