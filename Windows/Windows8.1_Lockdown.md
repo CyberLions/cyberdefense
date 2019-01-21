@@ -2,7 +2,7 @@
 
 ## Group Policy
 
-### Computer Configuration -> (Policies) -> Windows Settings -> Security Settings -> Local Policies
+### Computer Configuration -> Windows Settings -> Security Settings -> Local Policies
 
 #### Security Options
 
