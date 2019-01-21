@@ -39,7 +39,7 @@ Software\Microsoft\Windows NT\CurrentVersion
 
 ### Computer Configuration -> Administrative Templates -> Windows Components
 * **Windows Remote Management (WinRM)** -> WinRM Client -> Allow Basic authentication -> **Disabled**
-* **Policies** -> Turn off AutoPlay -> **Enabled: All Drives**
+* **AutoPlay Policies** -> Turn off AutoPlay -> **Enabled: All Drives**
 * **AutoPlay Policies** -> Disallow Autoplay for non-volume devices -> **Enabled**
 * **AutoPlay Policies** -> Set the default behavior for AutoRun -> **Enabled:Do not execute any autorun commands**
 * **Windows Installer** -> Always install with elevated privileges -> **Disabled**
