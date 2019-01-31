@@ -1,6 +1,8 @@
 ﻿System Hardening Guide
+======================
 Windows 10
-Consolidated from STIGViewer
+----------
+*Consolidated from STIGViewer*
 
 
 Group Policy

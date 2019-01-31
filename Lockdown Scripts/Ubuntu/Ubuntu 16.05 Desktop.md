@@ -1,3 +1,8 @@
+Ubuntu 16.05 Desktop Lockdown Script
+====================================
+
+```bash
+
 #Critical stigs for Ubuntu 16.05 for CCDC Competition. Petr Esakov
 
 #Check for security updates V-75391
@@ -33,4 +38,4 @@ sudo cut -d: -f2 /etc/shadow
 #Lock accts with unsecure encryption methods
 
 
-
+```
