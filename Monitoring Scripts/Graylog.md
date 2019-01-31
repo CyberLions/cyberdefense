@@ -3,7 +3,65 @@ Graylog
 
 ## Installation
 
+### Prereqs
 
+    Java (>= 8)
+    MongoDB (>= 2.4)
+    Elasticsearch (>= 2.x)
+
+#### Helpful prereqs
+```bash
+sudo apt update
+sudo apt install -y pwgen
+
+# CREATE ROOT PW FOR GRAYLOG
+echo -n "Enter Password: " && head -1 </dev/stdin | tr -d '\n' | sha256sum | cut -d" " -f1
+```
+
+#### Java
+```bash
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt update
+sudo apt install oracle-java8-installer
+```
+
+#### MongoDB
+```bash
+sudo apt update
+sudo apt install -y mongodb
+sudo systemctl status mongodb
+```
+
+#### Elasticsearch
+```bash
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
+sudo apt update
+sudo apt install elasticsearch
+sudo nano /etc/elasticsearch/elasticsearch.yml
+#. . .
+#network.host: localhost
+#. . .
+#CTRL+X, Y, <Enter>
+sudo systemctl start elasticsearch
+sudo systemctl enable elasticsearch
+curl -X GET "localhost:9200" # test
+```
+
+### DEB/APT
+```bash
+sudo apt-get install apt-transport-https
+wget https://packages.graylog2.org/repo/packages/graylog-2.5-repository_latest.deb
+sudo dpkg -i graylog-2.5-repository_latest.deb
+sudo apt-get update
+sudo apt-get install graylog-server
+
+# then start
+sudo systemctl start graylog-server
+
+# and/or enable on boot
+sudo systemctl enable graylog-server
+```
 
 --------------------------------------
 
