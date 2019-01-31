@@ -100,3 +100,13 @@ nginx -t # to make sure config is good
 nginx -s reload
 
 ```
+
+-------------------------------
+
+Splunk Enterprise with Docker
+=============================
+
+```bash
+docker pull splunk/splunk:latest
+docker run -d -p 8000:8000 -e 'SPLUNK_START_ARGS=--accept-license' -e 'SPLUNK_PASSWORD=<good 8 char+ password>' splunk/splunk:latest
+```
