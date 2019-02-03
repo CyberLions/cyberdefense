@@ -3,7 +3,7 @@
 ## Remote and Local Administration
 
 * [ ] Open terminal -> `service sshd stop`
-* [ ] Change root password -> `passwd`
+* [ ] Lock root account -> `passwd -l root`
 * [ ] Add a non-root user -> `useradd -m -s /bin/bash <name>` -> `passwd <name>`
 ```
 Debian/Ubuntu
