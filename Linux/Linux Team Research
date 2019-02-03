@@ -1,0 +1,15 @@
+Reasearch logging service 
+  -Log aggregation? 
+
+Services:
+  -SSH: J
+  -Apache: П
+  -NFS: R
+  -Struts2: E
+
+OS's:
+  -Ubuntu: П
+  -TrueOS: E
+  -CoreOS: J
+  -Photon: J
+  Solaris: R
