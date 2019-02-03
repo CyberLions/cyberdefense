@@ -66,7 +66,7 @@ ps aux <username>
 * Listing listening ports
 ```
 # netstat
-netstat -ano
+netstat -tulnp
 # lsof
 lsof -nPi
 ```
@@ -81,7 +81,8 @@ service <servicename> start/stop/restart
 ```
 * Check for accounts that have no passwords
 ```
-awk -F: '($2 == "") {print}' /etc/shadow
+cat /etc/shadow | awk -F: '($2 == "") {print $1}'
+cat /etc/shadow | awk -F: '($2 == "") {print $1}' > ~/no_password_users.txt
 ```
 * Linux kernel hardening
 ```
