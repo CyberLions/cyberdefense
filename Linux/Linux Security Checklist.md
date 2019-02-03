@@ -39,6 +39,10 @@ cd bfd-1.5/
 ## Database Security
 
 * [ ] Change or add a password for mysql or postgres
+* [ ] Securing MySQL
+```
+sudo mysql_secure_installation
+```
 
 ## Web Security
 
