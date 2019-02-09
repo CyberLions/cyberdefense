@@ -3,6 +3,7 @@
 ## Firewall/IPv6
 1. Disable IPv6
 ```
+ifconfig -a (to get address)
 ipadm delete-ip net0
 ipadm create-ip net0
 ipadm create-addr -T static -a <IP_ADDRESS> net0/v4
