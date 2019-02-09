@@ -13,14 +13,12 @@ sudo svcadm enable firewall
 svcs -x firewall:default
 svcprop firewall:default | grep ^firewall
 cd /etc/firewall/pf.conf
-sudo mv pf.conf pf.conf.bak
-sudo cp pf.conf.bak pf.conf
-sudo rm pf.conf
-sudo touch pf.conf
+sudo rm -f pf.conf
+sudo touch pf.conf (firewall won't work with the default configuration, must be changed)
 ```
 3. Add rules for http and ssh, deny all other, allow all out
 ```
-#sudo vim pf.conf
+# sudo vim pf.conf
 set reassemble yes no-df
 set skip on lo0
 block return
