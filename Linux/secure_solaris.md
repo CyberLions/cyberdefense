@@ -20,16 +20,27 @@ sudo touch pf.conf (firewall won't work with the default configuration, must be 
 3. Add rules for http and ssh, deny all other, allow all out
 ```
 # sudo vim pf.conf
+ext_if="net0"
 set reassemble yes no-df
 set skip on lo0
-block return
-pass in proto tcp to any port 22
-pass in proto tcp to any port 80
-pass out
+block return in log all
+block out all
+scrub in all
+antispoof quick for $ext_if
+block in quick inet6
+pass in quick inet proto tcp from any to $ext_if port 22
+pass in quick proto tcp from any to $ext_if port 80
+pass out quick on $ext_if proto tcp to any port 22
+pass out quick on $ext_if proto tcp to any port 80
+pass inet proto icmp icmp-type echoreq
 ```
 
 ## Users on system
 1. Remove any uneeded users or suspicious accounts
+```
+who -ua
+pkill -KILL -u <user>
+```
 2. If an account is needed, add or update the password
 3. Look for accounts without passwords
 ```
@@ -84,6 +95,10 @@ IgnoreRhosts yes
 6. Enable ssh
 ```
 sudo svcadm enable ssh
+```
+7. Check crontab and remove any suspicious cron jobs
+```
+crontab -e
 ```
 
 ## AV
