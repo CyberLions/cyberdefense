@@ -17,31 +17,33 @@ cd /etc/firewall/pf.conf
 sudo rm -f pf.conf
 sudo touch pf.conf (firewall won't work with the default configuration, must be changed)
 ```
-3. Add rules for http and ssh, deny all other, allow all out
+3. Add rules for http and ssh and block the rest
 ```
 # sudo vim pf.conf
-ext_if="net0"
+ext_if = "net0"
+trusted_hosts = "192.168.1.0/28"
+
 set reassemble yes no-df
 set skip on lo0
-block return in log all
-block out all
-scrub in all
-antispoof quick for $ext_if
-block in quick inet6
-pass in quick inet proto tcp from any to $ext_if port 22
-pass in quick proto tcp from any to $ext_if port 80
-pass out quick on $ext_if proto tcp to any port 22
-pass out quick on $ext_if proto tcp to any port 80
-pass inet proto icmp icmp-type echoreq
+block log all
+antispoof for $ext_if
+
+pass proto icmp all
+pass in proto tcp from $trusted_hosts to $ext_if port 22
+pass in proto tcp from $trusted_hosts to $ext_if port 80
+pass out on $ext_if proto tcp from $trusted_hosts to any port 22
+pass out on $ext_if proto tcp from $trusted_hosts to any port 80
 ```
 
 ## Users on system
 1. Remove any uneeded users or suspicious accounts
 ```
 who -ua
-pkill -KILL -u <user>
+w
+kill -9 -u <user>
+kill -9 <uid>
 ```
-2. If an account is needed, add or update the password
+2. If an account is needed, add or update the password (frequently)
 3. Look for accounts without passwords
 ```
 cat /etc/shadow | awk -F: '($2 == "") {print $1}'
@@ -61,12 +63,12 @@ MODE=""
 2. List processes
 ```
 # View
-ps ax | less
+ps -ef | less
 svcs -a
 svcs enable/disable
 fuser
 # Kill
-pkill <http>
+kill <http>
 kill <process_id>
 ```
 3. List open ports `netstat -an | less`
@@ -98,7 +100,9 @@ sudo svcadm enable ssh
 ```
 7. Check crontab and remove any suspicious cron jobs
 ```
-crontab -e
+crontab -l
+cat /etc/crontabs
+svcadm disable cron
 ```
 
 ## AV
@@ -144,7 +148,7 @@ sudo svcadm restart mysql
    * WPTF Image Gallery
    * Google MP3 Audio Player
    * More [here](wordpress_vuln_plugins.md)
-5. Log out and move wp-admin/ folder to another location, or rename it so it is not on the server and rename wp-login.php
+5. (Maybe) Log out and move wp-admin/ folder to another location, or rename it so it is not on the server and rename wp-login.php
 ```
 sudo mv wp-admin/ ~
 sudo mv wp-login.php sfxli.php
@@ -157,8 +161,11 @@ AuthName "Login"
 AuthUserFile /export/home/<user>/.htpasswd
 require valid-user
 ```
-7. Edit /etc/apache2/2.x/httpd.conf and delete any uneeded modules
+7. Edit /etc/apache2/2.x/httpd.conf and delete any uneeded modules, remove page indexes, and hide Apache and PHP versions
 ```
+ServerSignature Off
+ServerTokens Prod
+
 <Directory />
     AllowOverride None
     Require all denied
@@ -207,8 +214,11 @@ tail -f /var/apache2/2.x/logs/access_log
 ### System
 ```
 tail -f /var/log/syslog
+tail -f /var/cron/log
 ```
 ### Network
 ```
 ipstat
+tcpdump -n -e -ttt -r /var/log/pflog
+tcpdump -n -e -ttt -r /var/log/pflog port 80
 ```
