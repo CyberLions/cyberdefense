@@ -35,21 +35,6 @@ pass out on $ext_if proto tcp from $trusted_hosts to any port 22
 pass out on $ext_if proto tcp from $trusted_hosts to any port 80
 ```
 
-## Users on system
-1. Remove any uneeded users or suspicious accounts
-```
-who -ua
-w
-kill -9 -u <user>
-kill -9 <uid>
-```
-2. If an account is needed, add or update the password (frequently)
-3. Look for accounts without passwords
-```
-cat /etc/shadow | awk -F: '($2 == "") {print $1}'
-cat /etc/shadow | awk -F: '($2 == "") {print $1}' > ~/no_password_users.txt
-```
-
 ## Services
 1. Disable sendmail
 ```
@@ -103,6 +88,21 @@ sudo svcadm enable ssh
 crontab -l
 cat /etc/crontabs
 svcadm disable cron
+```
+
+## Users on system
+1. Remove any uneeded users or suspicious accounts
+```
+who -ua
+w
+kill -9 -u <user>
+kill -9 <uid>
+```
+2. If an account is needed, add or update the password (frequently)
+3. Look for accounts without passwords
+```
+cat /etc/shadow | awk -F: '($2 == "") {print $1}'
+cat /etc/shadow | awk -F: '($2 == "") {print $1}' > ~/no_password_users.txt
 ```
 
 ## AV
