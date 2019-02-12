@@ -205,6 +205,12 @@ SecRule RESPONSE_STATUS "^200" "phase:5,chain,t:none,nolog,pass,setvar:ip.bf_cou
 SecRule ip:bf_counter "@gt 10" "t:none,setvar:user.bf_block=1,expirevar:user.bf_block=300,setvar:ip.bf_counter=0"
 </locationmatch>
 ```
+11. If all else fails move wp-login to a new file, copy all the content from wp-login into it, and replace all instances of wp-login within the file with the new file name
+```
+mv wp-login.php wp-login.php.old
+cp wp-login.php.old new.php
+vim new.php > :%s/wp-login.php/new.php/g
+```
 
 ## Log management
 ### Wordpress page
