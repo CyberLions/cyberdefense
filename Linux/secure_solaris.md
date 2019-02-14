@@ -21,22 +21,32 @@ sudo touch pf.conf (firewall won't work with the default configuration, must be 
 ```
 # sudo vim pf.conf
 ext_if = "net0"
-trusted_hosts = "192.168.1.0/28"
 
 set reassemble yes no-df
 set skip on lo0
+
 block log all
 antispoof for $ext_if
+table <bruteforce> persist
+block quick from <bruteforce>
 
 pass proto icmp all
-pass in proto tcp from $trusted_hosts to $ext_if port 22
-pass in proto tcp from $trusted_hosts to $ext_if port 80
-pass out on $ext_if proto tcp from $trusted_hosts to any port 22
-pass out on $ext_if proto tcp from $trusted_hosts to any port 80
+pass in proto tcp from any to $ext_if port 22 keep state (max-src-conn 2, max-src-conn-rate 5/3, \
+  overload <bruteforce> flush global)
+pass in proto tcp from any to $ext_if port 80 keep state (max-src-conn 10, max-src-conn-rate 5/3, \
+  overload <bruteforce> flush global)
+pass out on $ext_if proto tcp from $ext_if to any port 22
+pass out on $ext_if proto tcp from $ext_if to any port 80
 ```
 
 ## Services
-1. Disable sendmail
+1. Check crontab and remove any suspicious cron jobs
+```
+crontab -l(or e)
+cat /etc/crontabs
+svcadm disable cron
+```
+2. Disable sendmail
 ```
 svcadm disable sendmail(-client)
 cd /etc/init.d/
@@ -45,7 +55,7 @@ cd /etc/default
 # Edit sendmail or create it
 MODE=""
 ```
-2. List processes
+3. List processes
 ```
 # View
 ps -ef | less
@@ -56,9 +66,9 @@ fuser
 kill <http>
 kill <process_id>
 ```
-3. List open ports `netstat -an | less`
+4. List open ports `netstat -an | less`
    * Make sure only 22 and 80 are open
-4. Use SSH public key based login
+5. Use SSH public key based login
 ```
 sudo svcadm disable ssh
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_space_force
@@ -66,7 +76,7 @@ cd .ssh/
 cat id_space_force.pub > file
 sudo mv file authorized_keys
 ```
-5. Disble root login and other security measures
+6. Disble root login and other security measures
 ```
 # /etc/ssh/sshd_config
 PermitRootLogin no
@@ -79,15 +89,9 @@ AllowUsers <allowed users>
 PermitEmptyPasswords no
 IgnoreRhosts yes
 ```
-6. Enable ssh
+7. Enable ssh
 ```
 sudo svcadm enable ssh
-```
-7. Check crontab and remove any suspicious cron jobs
-```
-crontab -l
-cat /etc/crontabs
-svcadm disable cron
 ```
 
 ## Users on system
