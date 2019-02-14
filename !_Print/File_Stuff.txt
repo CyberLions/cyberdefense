@@ -1,0 +1,20 @@
+sed -i "s/UMASK.*022/UMASK   077/" /etc/login.defs
+sed -i "s/#.*umask.*022/umask 077/" /root/.bashrc
+chown root:root /etc/passwd
+chmod 644 /etc/passwd
+chown root:shadow /etc/shadow
+chmod 640 /etc/shadow
+chown root:root /etc/group
+chmod 644 /etc/group
+chown root:shadow /etc/gshadow
+chmod 640 /etc/group
+chown root:root /etc/security/opasswd
+chmod 600 /etc/security/opasswd
+chown root:root /etc/passwd-
+chmod 600 /etc/passwd-
+chown root:root /etc/shadow-
+chmod 600 /etc/shadow-
+chown root:root /etc/group-
+chmod 600 /etc/group-
+chown root:root /etc/gshadow-
+chmod 600 /etc/gshadow-
